@@ -1,68 +1,33 @@
-buildscript {
-    ext {
-        springBootVersion = '1.2.2.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
+apply plugin: JavaPlugin
 
-apply plugin: 'groovy'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
-apply plugin: 'maven-publish'
-
-jar {
-    baseName = 'mediterm-service'
-    version = '0.0.1-SNAPSHOT'
-}
-
-// $ gradle publishToMavenLocal
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // TODO: Where to place these properties?
-            groupId 'md.your.mediterm'
-            artifactId 'mediterm-service'
-            version '0.0.1-SNAPSHOT'
-
-            from components.java
-        }
-    }
+compileJava {
+    options.compilerArgs << '-parameters'
 }
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven {
-        // Can't find spring-cloud-build in maven central...
-        url 'http://maven.springframework.org/release'
-    }
 }
 
 
 dependencies {
-    // TODO: Added ver no on the three core starter deps to make the maven plugin to work
-    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
 
-    compile 'org.codehaus.groovy:groovy-all:2.4.4'
-    compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    compile("org.springframework.cloud:spring-cloud-starter-hystrix:1.0.0.RELEASE")
-    compile("org.springframework.cloud:spring-cloud-starter-eureka:1.0.0.RELEASE")
-    compile("com.atlascopco:hunspell-bridj:1.0.1")
-    compile("com.google.guava:guava:11.0.2")
-    compile("edu.stanford.nlp:stanford-corenlp:3.5.2:models")
-    compile("edu.stanford.nlp:stanford-corenlp:3.5.2")
-    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
-//    compile fileTree(include: ['*.jar'], dir: '/Users/Mehdis/Documents/programs/stanford-corenlp-full-2015-12-09')
+    compileOnly 'org.projectlombok:lombok:1.16.18'
+    compile 'com.google.guava:guava:22.0'
+    compile 'org.apache.commons:commons-lang3:3.6'
+    compile 'org.apache.commons:commons-collections4:4.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.9'
+    compile 'commons-io:commons-io:2.5'
+    compile 'io.vavr:vavr:0.9.0'
+    compile 'one.util:streamex:0.6.5'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.googlecode.zohhak:zohhak:1.1.1'
+    testCompile 'org.assertj:assertj-core:3.8.0'
+    testCompile 'org.assertj:assertj-guava:3.1.0'
+    testCompile 'org.skyscreamer:jsonassert:1.5.0'
+    testCompile 'com.diffplug.durian:durian:3.4.0'
 
 }
